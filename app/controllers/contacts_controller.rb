@@ -9,13 +9,12 @@ class ContactsController < ApplicationController
 
   # GET /contacts/1
   def show
-    render json: @contact
+    render json: @contact, include: [:kind, :phones, :address]
   end
 
   # POST /contacts
   def create
     @contact = Contact.new(contact_params)
-
     if @contact.save
       render json: @contact, status: :created, location: @contact
     else
@@ -45,6 +44,11 @@ class ContactsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def contact_params
-      params.require(:contact).permit(:name, :email, :bithdate)
+      # params.require(:contact).permit(:name, :email, :bithdate, :kind_id,
+      #   phones_attributes: [:id, :number, :_destroy],
+      #   address_attributes: [:id, :street, :city]
+      # )
+
+      ActiveModelSerializers::Deserialization.jsonapi_parse(params)
     end
 end
