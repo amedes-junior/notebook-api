@@ -3,7 +3,6 @@ class ContactSerializer < ActiveModel::Serializer
 
   belongs_to :kind do
     link(:related) {contact_kind_url(object.id)}
-
   end
 
   has_many :phones do
