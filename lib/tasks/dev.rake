@@ -16,7 +16,7 @@ namespace :dev do
     #############
 
     puts "Cadastrando Contatos ..."
-    1.times do
+    100.times do
       Contact.create!(
         name: Faker::Name.name,
         email: Faker::Internet.email,
@@ -40,12 +40,12 @@ namespace :dev do
 
     puts "Cadastrando Endereços"
 
-    # Contact.all.each do |contact|
-    #   Address.create!(street: Faker::Address::street_address,
-    #       city: Faker::Address::city,
-    #       contact: contact
-    #   )
-    # end
+    Contact.all.each do |contact|
+      Address.create!(street: Faker::Address::street_address,
+          city: Faker::Address::city,
+          contact: contact
+      )
+    end
 
     puts "Endereços cadastrados com sucesso"
 
