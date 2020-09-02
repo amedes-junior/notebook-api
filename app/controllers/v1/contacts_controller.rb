@@ -5,7 +5,11 @@ module V1
     # GET /contacts
     def index
       @contacts = Contact.all.page(params[:page])
-      paginate json: @contacts
+      #expires_in 3.seconds, public: false
+
+      if stale?(etag: @contacts) #ver => last_modified
+        paginate json: @contacts
+      end
     end
 
     # GET /contacts/1
